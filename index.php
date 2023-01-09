@@ -73,13 +73,36 @@ class Professeur extends Personne{
     }
 }
 
+class Promo {
+    public string $nom;
+    public int $niveau;
+    public Professeur $profPrincipal;
+    public array $eleves;
+
+    function __construct(string $nom, int $niveau)
+    {
+        $this->nom = $nom;
+        $this->niveau = $niveau;
+    }
+
+    function __toString(): string
+    {
+    
+        $string = "Nous somme la classe de ". $this->niveau . "ème " . $this->nom . ". Notre professeur principal est " . $this->profPrincipal->prenom . " " . $this->profPrincipal->nom . ". Voici nos élèves : <br>" ;
+        foreach($this->eleves as $eleve){
+            $string .= "- " . $eleve->prenom . " " . $eleve->nom . "<br> ";
+        }
+        return $string;
+    }
+}
+
 $personne1 = new Personne("Valtat", "Amandine");
 
 $professeur1 = new Professeur("Butin", "Patrick", "Musique", "patrick.butin@conservatoire-maurepas.fr");
 
-$eleve = new Eleve("Toto", "Patate", "1995-10-02");
-$eleve2 = new Eleve("Tatie", "Potato", "1985-11-03");
-$eleve3 = new Eleve("Mommy", "Batata","1983-06-01");
+$eleve = new Eleve("Patate", "Toto", "1995-10-02");
+$eleve2 = new Eleve("Potato", "Tatie", "1985-11-03");
+$eleve3 = new Eleve("Batata", "Mommy","1983-06-01");
 
 $professeur1->direBonjour();
 $personne1->direBonjour();
@@ -87,8 +110,17 @@ $eleve->direBonjour();
 $eleve2->direBonjour();
 $eleve3->direBonjour();
 
+$promo = new Promo("A", 6);
+$promo->profPrincipal = $professeur1;
+$promo->eleves = [$eleve, $eleve2, $eleve3];
+echo $promo;
+
 echo "<p>Voici le nombre total d'élèves : " . Eleve::$nombre . "</p>";
 
+//TODO: Créer classe promo, désigner un professeur principal, accéder aux infos du prof principal et aux élèves de la classe
+
+
+/*-----------------------------------------------------------------------------------------------*/
 
 /*$eleve = new Eleve;
 $eleve->nom = "Toto";
@@ -129,5 +161,4 @@ $formation1->infosFormations();
 $formation2->infosFormations();
 */
 
-//TODO: Créer classe promo, désigner un professeur principal, accéder aux infos du prof principal et aux élèves de la classe
 ?>
